@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+import re
 from typing import Any
 
 import httpx
@@ -56,8 +57,8 @@ def _validate_fen(fen: str) -> str:
     fen = fen.strip()
     try:
         chess.Board(fen)
-    except Exception:
-        raise HTTPException(status_code=400, detail="Invalid FEN.")
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail="Invalid FEN.") from e
     return fen
 
 
@@ -69,15 +70,13 @@ def _validate_san(moves: list[str]) -> list[str]:
             move = board.parse_san(m)
             board.push(move)
             cleaned.append(m)
-        except Exception:
-            raise HTTPException(status_code=400, detail=f"Invalid SAN move: {m}")
+        except ValueError as e:
+            raise HTTPException(status_code=400, detail=f"Invalid SAN move: {m}") from e
     return cleaned
 
 
 def _strip_coordinates(text: str) -> str:
     """Guard against leaking algebraic notation."""
-    import re
-
     text = re.sub(
         r"\b(?:O-O(?:-O)?|[KQRBN]?[a-h]?[1-8]?x?[a-h][1-8](?:=[QRBN])?[+#]?)\b",
         "your move",
