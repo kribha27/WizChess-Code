@@ -19,13 +19,17 @@ GEMINI_URL = (
 )
 
 ALLOWED_ORIGINS = [
-    o.strip()
-    for o in os.environ.get(
-        "ALLOWED_ORIGINS",
-        "http://localhost:5173,http://localhost:4173",
-    ).split(",")
-    if o.strip()
+    "https://dist-qsujjesy.devinapps.com"
 ]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=ALLOWED_ORIGINS,
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type"],
+)
+
 
 WIZ_SYSTEM_PROMPT = """You are Wiz, a Wise and Whimsical mentor in the world of WizChess.
 
