@@ -170,14 +170,6 @@ COPY --from=builder /app/dist /usr/share/nginx/html
 3. Push to branch: `git push origin feature/amazing-feature`
 4. Open a Pull Request
 
-## License
-
-This project is open source. See LICENSE file for details.
-
-## Support
-
-For issues, questions, or suggestions, please open an issue on GitHub.
-
 ## Acknowledgments
 
 - Built with [FastAPI](https://fastapi.tiangolo.com/)
