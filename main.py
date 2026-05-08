@@ -18,7 +18,6 @@ GEMINI_URL = (
     f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent"
 )
 
-# ✅ Only allow your deployed frontend domain
 ALLOWED_ORIGINS = [
     "https://dist-qsujjesy.devinapps.com"
 ]
