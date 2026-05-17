@@ -1,0 +1,437 @@
+/* WizChess theme */
+
+:root {
+  --bg: #0b0d11;
+  --scroll: #ece0cc;
+  --primary: #1a472a;
+  --gold: #e58b0b;
+  --highlight: #ae0001;
+  --secondary: #5d5d5d;
+  --ink: #4a0404;
+  --parchment-text: #4a0404;
+  --glow-text: #ece0cc;
+  --font-display: "Harry P", "Cinzel Decorative", "Cinzel", "Trajan Pro", serif;
+  --font-body: "Garamond", "EB Garamond", "Cormorant Garamond", Georgia, serif;
+}
+
+/* If the user drops a HarryP.ttf into public/fonts/, it will be used. */
+@font-face {
+  font-family: "Harry P";
+  src: url("/fonts/HarryP.ttf") format("truetype");
+  font-display: swap;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  color: var(--glow-text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-image: radial-gradient(
+    ellipse at 50% 38%,
+    rgba(229, 139, 11, 0.16) 0%,
+    rgba(229, 139, 11, 0.05) 28%,
+    rgba(11, 13, 17, 1) 70%
+  );
+  background-attachment: fixed;
+}
+
+h1,
+h2,
+h3,
+.display {
+  font-family: var(--font-display);
+  letter-spacing: 0.04em;
+  color: var(--glow-text);
+  text-shadow: 0 0 10px rgba(229, 139, 11, 0.3);
+  margin: 0;
+}
+
+button {
+  font-family: var(--font-body);
+}
+
+/* Layout */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  padding: 18px 24px 6px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 900;
+  color: var(--gold);
+  text-shadow: 0 0 18px rgba(229, 139, 11, 0.55), 0 0 2px rgba(255, 220, 150, 0.6);
+  letter-spacing: 0.06em;
+}
+
+.tagline {
+  font-style: italic;
+  color: #c9b78d;
+  opacity: 0.85;
+}
+
+.app-main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 24px;
+  padding: 8px 24px 24px;
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.board-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .app-main {
+    grid-template-columns: 1fr;
+    padding: 8px 12px 96px;
+  }
+  .sidebar {
+    order: 2;
+  }
+}
+
+/* Board frame */
+.board-frame {
+  position: relative;
+  padding: 14px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #6e3d05, #b46a09 40%, #f0a829 50%, #b46a09 60%, #6e3d05);
+  box-shadow: 0 0 0 2px #3a1f02, 0 0 24px rgba(229, 139, 11, 0.35),
+    inset 0 0 12px rgba(0, 0, 0, 0.5);
+  width: min(80vh, 640px, 100%);
+  aspect-ratio: 1 / 1;
+}
+
+.board-frame::before,
+.board-frame::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 2px solid rgba(74, 4, 4, 0.5);
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+.board-frame::after {
+  inset: 8px;
+  border: 1px solid rgba(229, 139, 11, 0.55);
+}
+
+.board-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Magic pulse highlight overlay */
+@keyframes magic-pulse {
+  0% { opacity: 0.3; }
+  50% { opacity: 0.7; }
+  100% { opacity: 0.3; }
+}
+
+.pulse {
+  animation: magic-pulse 2s ease-in-out infinite;
+}
+
+/* Buttons */
+.btn {
+  font-family: var(--font-body);
+  font-size: 16px;
+  padding: 10px 18px;
+  background: var(--primary);
+  color: var(--glow-text);
+  border: 2px solid var(--gold);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: filter 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+  letter-spacing: 0.02em;
+}
+
+.btn:hover:not(:disabled) {
+  filter: brightness(1.18);
+  box-shadow: 0 0 16px rgba(229, 139, 11, 0.55);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: var(--secondary);
+  border-color: var(--gold);
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid rgba(229, 139, 11, 0.5);
+  color: var(--glow-text);
+}
+
+/* Panel (parchment) */
+.panel {
+  background: var(--scroll);
+  color: var(--parchment-text);
+  border-radius: 8px;
+  padding: 14px 16px;
+  position: relative;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6);
+  font-family: var(--font-body);
+}
+
+.panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  pointer-events: none;
+  /* burnt edge */
+  box-shadow: inset 0 0 0 2px rgba(74, 4, 4, 0.35),
+    inset 0 0 24px rgba(74, 4, 4, 0.45);
+}
+
+.panel h3 {
+  font-family: var(--font-display);
+  color: var(--ink);
+  text-shadow: none;
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+
+.panel-dark {
+  background: rgba(15, 18, 24, 0.7);
+  color: var(--glow-text);
+  border: 1px solid rgba(229, 139, 11, 0.35);
+  border-radius: 8px;
+  padding: 12px 14px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4) inset;
+}
+
+.panel-dark h3 {
+  font-family: var(--font-display);
+  color: var(--gold);
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+/* Focus points */
+.focus-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.focus-orb {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #ffd97a, var(--gold) 60%, #6e3d05);
+  box-shadow: 0 0 14px rgba(229, 139, 11, 0.7), inset 0 0 6px rgba(255, 230, 160, 0.6);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #3a1f02;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 900;
+  animation: magic-pulse 2.4s ease-in-out infinite;
+}
+
+.focus-orb.spent {
+  background: radial-gradient(circle at 30% 30%, #555, #2a2a2a 60%, #111);
+  box-shadow: none;
+  color: #777;
+  animation: none;
+  opacity: 0.45;
+}
+
+/* Move history */
+.history {
+  font-family: var(--font-body);
+  max-height: 180px;
+  overflow-y: auto;
+  font-size: 14px;
+  line-height: 1.45;
+  padding-right: 4px;
+}
+
+.history-row {
+  display: grid;
+  grid-template-columns: 28px 1fr 1fr;
+  gap: 6px;
+  padding: 1px 0;
+}
+
+.history-row .num {
+  color: rgba(74, 4, 4, 0.6);
+}
+
+/* Captured pieces */
+.captured {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  font-size: 22px;
+  min-height: 28px;
+  line-height: 1;
+}
+
+/* Dialogue scroll */
+.dialogue-scroll {
+  max-height: 240px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.dialogue-line {
+  white-space: pre-wrap;
+}
+
+.dialogue-line.user {
+  font-style: italic;
+  color: rgba(74, 4, 4, 0.7);
+}
+
+.dialogue-line.wiz::before {
+  content: "Wiz: ";
+  font-family: var(--font-display);
+  color: var(--ink);
+  margin-right: 4px;
+}
+
+.dialogue-line.system {
+  font-style: italic;
+  color: rgba(74, 4, 4, 0.65);
+  text-align: center;
+}
+
+/* Announcement */
+.announcement {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 48px);
+  color: var(--gold);
+  text-shadow: 0 0 18px rgba(229, 139, 11, 0.6);
+  text-align: center;
+  margin: 4px 0 8px;
+  letter-spacing: 0.05em;
+}
+
+/* Difficulty + controls row */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.controls label {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: #c9b78d;
+}
+
+select.btn {
+  padding-right: 28px;
+}
+
+/* Floating Consult button (mobile) */
+.floating-consult {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .floating-consult {
+    display: inline-flex;
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 30;
+    padding: 14px 18px;
+    border-radius: 999px;
+    font-size: 15px;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.5), 0 0 16px rgba(229, 139, 11, 0.55);
+  }
+  .desktop-consult {
+    display: none;
+  }
+}
+
+/* Fade-to-black overlay for menu transitions */
+.fade-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 100;
+}
+
+.fade-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Scrollbar styling on parchment */
+.dialogue-scroll::-webkit-scrollbar,
+.history::-webkit-scrollbar {
+  width: 6px;
+}
+
+.dialogue-scroll::-webkit-scrollbar-thumb,
+.history::-webkit-scrollbar-thumb {
+  background: rgba(74, 4, 4, 0.35);
+  border-radius: 4px;
+}
